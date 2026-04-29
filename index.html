@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kulsam Shanofer — To What Extent Do Fairness Judgment and Reward-Risk Predictive Error Learning Share Neural Substrates?</title>
+<meta name="description" content="A narrative synthesis examining the extent to which fairness judgment and reward-risk predictive error learning share neural substrates in the human brain."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07101f; --s1:#0d1828; --s2:#111e36; --s3:#162444;
+  --panel:rgba(11,20,42,.82); --panel2:rgba(13,24,50,.9);
+  --text:#e6edf8; --muted:#8ba2c8; --faint:#374d6e;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+  --teal:#4ec9db; --green:#5de89e; --gold:#f5c345;
+  --purple:#b87dff; --pink:#ff7eb3; --blue:#6aabf0;
+  --r:18px; --ease:cubic-bezier(.16,1,.3,1);
+  --shadow:0 24px 64px rgba(0,0,0,.45);
+  --font-display:"Instrument Serif",Georgia,serif;
+  --font-head:"Space Grotesk",system-ui,sans-serif;
+  --font-body:Inter,system-ui,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f5f3ef; --s1:#ffffff; --s2:#f9f8f5; --s3:#f0ede8;
+  --panel:rgba(255,255,255,.9); --panel2:rgba(248,247,244,.95);
+  --text:#1a2030; --muted:#5a6a88; --faint:#b0b8c8;
+  --border:rgba(0,0,0,.07); --border2:rgba(0,0,0,.12);
+  --shadow:0 12px 40px rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:72px;}
+body{min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;
+  background:var(--panel);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 clamp(16px,4vw,48px);}
+.nav-inner{max-width:1200px;margin:0 auto;height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.nav-logo{font-family:var(--font-head);font-weight:700;font-size:.95rem;
+  color:var(--text);text-decoration:none;letter-spacing:-.01em;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{font-size:.82rem;color:var(--muted);text-decoration:none;
+  padding:7px 11px;border-radius:10px;transition:all 160ms var(--ease);}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06);}
+.theme-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border2);
+  background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;
+  display:grid;place-items:center;transition:all 160ms var(--ease);}
+.theme-btn:hover{background:rgba(255,255,255,.1);}
+
+/* LAYOUT */
+.section{padding:clamp(60px,8vw,110px) clamp(16px,4vw,48px);}
+.inner{max-width:1120px;margin:0 auto;}
+.inner-narrow{max-width:760px;margin:0 auto;}
+.sec-label{font-family:var(--font-head);font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.sec-title{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:400;letter-spacing:-.02em;margin-bottom:16px;line-height:1.18;}
+.sec-sub{font-size:1rem;color:var(--muted);max-width:64ch;line-height:1.7;}
+
+/* HERO */
+.hero{min-height:96vh;display:flex;align-items:center;
+  background:
+    radial-gradient(ellipse at 18% 40%,rgba(78,201,219,.09) 0%,transparent 52%),
+    radial-gradient(ellipse at 82% 65%,rgba(184,125,255,.07) 0%,transparent 50%),
+    var(--bg);
+  padding:clamp(40px,8vw,100px) clamp(16px,4vw,48px);}
+.hero-inner{max-width:1120px;margin:0 auto;display:grid;
+  grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.hero-title{font-family:var(--font-display);
+  font-size:clamp(2rem,4vw,3.6rem);
+  line-height:1.1;letter-spacing:-.025em;
+  margin-bottom:10px;font-weight:400;color:var(--text);}
+.hero-title em{font-style:italic;color:var(--teal);}
+.hero-byline{font-family:var(--font-display);font-size:1.05rem;
+  color:var(--muted);font-style:italic;margin-bottom:22px;letter-spacing:.01em;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(78,201,219,.1);border:1px solid rgba(78,201,219,.22);
+  color:var(--teal);border-radius:999px;padding:7px 14px;
+  font-size:.8rem;font-weight:500;margin-bottom:20px;letter-spacing:.01em;}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);
+  animation:pulse 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.75);}}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:52ch;line-height:1.75;margin-bottom:30px;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;}
+.meta-pill{font-size:.79rem;padding:6px 13px;border-radius:999px;
+  background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--muted);}
+.hero-vis{background:var(--panel2);border:1px solid var(--border2);border-radius:24px;
+  padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.hero-vis::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(78,201,219,.06),transparent 60%);
+  pointer-events:none;}
+
+/* ABSTRACT */
+.abstract-card{background:var(--panel);backdrop-filter:blur(16px);
+  border:1px solid var(--border2);border-radius:24px;padding:42px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.abstract-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--purple),var(--gold));}
+.abstract-label{font-family:var(--font-head);font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+.abstract-text{font-size:1.05rem;color:var(--text);line-height:1.82;max-width:74ch;}
+.abstract-text strong{color:var(--teal);}
+
+/* METHODS / LIMITS GRID */
+.methods-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
+.mcard{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;gap:10px;}
+.micon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;}
+.mcard h4{font-family:var(--font-head);font-size:.9rem;font-weight:700;}
+.mcard p{font-size:.83rem;color:var(--muted);line-height:1.65;}
+
+/* FINDINGS */
+.findings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;margin-top:32px;}
+.finding-card{background:var(--panel);border:1px solid var(--border);border-radius:20px;
+  padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform 220ms var(--ease),box-shadow 220ms ease;}
+.finding-card:hover{transform:translateY(-3px);box-shadow:0 28px 64px rgba(0,0,0,.35);}
+.finding-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;}
+.finding-card:nth-child(1)::before{background:var(--teal);}
+.finding-card:nth-child(2)::before{background:var(--green);}
+.finding-card:nth-child(3)::before{background:var(--gold);}
+.finding-card:nth-child(4)::before{background:var(--purple);}
+.finding-card:nth-child(5)::before{background:var(--pink);}
+.finding-num{font-family:var(--font-head);font-size:2.2rem;font-weight:700;
+  opacity:.07;position:absolute;top:10px;right:18px;}
+.finding-title{font-family:var(--font-head);font-size:.98rem;font-weight:700;margin-bottom:10px;}
+.finding-text{font-size:.86rem;color:var(--muted);line-height:1.65;}
+.finding-refs{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
+.fref{font-size:.71rem;padding:3px 7px;border-radius:999px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--muted);}
+
+/* DIAGRAM */
+.diag-wrap{background:var(--panel2);border:1px solid var(--border);
+  border-radius:28px;overflow:hidden;box-shadow:var(--shadow);}
+.diag-header{padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.diag-title{font-family:var(--font-head);font-weight:700;font-size:1rem;}
+.diag-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.db{font-size:.78rem;padding:7px 12px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:var(--muted);font-family:var(--font-body);transition:all 160ms var(--ease);}
+.db:hover{background:rgba(255,255,255,.09);color:var(--text);}
+.db.on{background:rgba(78,201,219,.12);border-color:rgba(78,201,219,.3);color:#b0e8f4;}
+.diag-body{display:grid;grid-template-columns:1fr 320px;}
+.diag-flow{padding:28px;}
+.diag-panel{border-left:1px solid var(--border);padding:20px;
+  display:flex;flex-direction:column;gap:14px;background:rgba(255,255,255,.015);}
+/* flow nodes */
+.flowchart{display:flex;flex-direction:column;align-items:center;}
+.f-row{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;}
+.rnode{border-radius:16px;border:2px solid transparent;padding:14px 18px;
+  cursor:pointer;position:relative;z-index:2;user-select:none;transition:transform 200ms var(--ease),
+  opacity 200ms ease,box-shadow 200ms ease,border-color 200ms ease;}
+.rnode:hover{transform:scale(1.025);box-shadow:0 8px 28px rgba(0,0,0,.25);}
+.rnode.sel{box-shadow:0 0 0 3px white,0 10px 32px rgba(0,0,0,.35);}
+.rnode.dim{opacity:.16;pointer-events:none;}
+.rn-tag,.rn-name,.rn-sub,.rn-ref{pointer-events:none;}
+.rn-tag{font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.7;}
+.rn-name{font-family:var(--font-head);font-size:.95rem;font-weight:700;line-height:1.2;}
+.rn-sub{font-size:.77rem;color:rgba(255,255,255,.58);margin-top:3px;line-height:1.4;}
+.rn-ref{font-size:.7rem;padding:3px 8px;border-radius:999px;margin-top:7px;display:inline-block;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);}
+.arr-d{width:2px;height:26px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.14),rgba(255,255,255,.04));
+  position:relative;margin:0 auto;pointer-events:none;}
+.arr-d::after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
+  border-top:7px solid rgba(255,255,255,.18);}
+.split{display:grid;grid-template-columns:1fr 36px 1fr;
+  gap:0;align-items:start;width:100%;max-width:620px;margin:0 auto;}
+.split-mid{display:flex;flex-direction:column;align-items:center;padding-top:22px;pointer-events:none;}
+.sa{width:34px;height:2px;background:rgba(255,255,255,.1);position:relative;}
+.sa.r::after{content:"";position:absolute;right:-1px;top:-5px;
+  border-left:7px solid rgba(255,255,255,.16);border-top:5px solid transparent;border-bottom:5px solid transparent;}
+.sa.l::after{content:"";position:absolute;left:-1px;top:-5px;
+  border-right:7px solid rgba(255,255,255,.16);border-top:5px solid transparent;border-bottom:5px solid transparent;}
+.sv{width:2px;height:40px;background:rgba(255,255,255,.07);}
+.merge{display:flex;align-items:center;padding:0 50px;width:100%;pointer-events:none;}
+.ml{flex:1;height:2px;background:linear-gradient(to right,transparent,rgba(255,255,255,.1));}
+.mr{flex:1;height:2px;background:linear-gradient(to left,transparent,rgba(255,255,255,.1));}
+.mdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);}
+.dec{border-radius:12px;border:1px solid rgba(255,255,255,.1);padding:7px 16px;
+  font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.03);
+  display:inline-flex;align-items:center;gap:8px;margin:6px auto;pointer-events:none;}
+.n-stim{background:#0e1e36;border-color:#3B6FA8;}
+.n-men{background:#1a1d0a;border-color:#c4a006;}
+.n-ai{background:#1a0e2e;border-color:#7B3FBA;}
+.n-vs{background:#0a2218;border-color:#1F8B52;}
+.n-vmpfc{background:#1e1608;border-color:#c47a00;}
+.n-dacc{background:#1c0d1e;border-color:#B03060;}
+.n-out{background:#0e1e36;border-color:#3B6FA8;}
+/* panel */
+.card-s{background:rgba(255,255,255,.025);border:1px solid var(--border);
+  border-radius:14px;padding:14px;}
+.card-s h4{font-family:var(--font-head);font-size:.88rem;font-weight:700;margin-bottom:8px;}
+.panel-title{font-family:var(--font-head);font-weight:700;font-size:.97rem;margin-bottom:6px;}
+.panel-text{font-size:.81rem;color:var(--muted);line-height:1.6;}
+.panel-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.chip{font-size:.71rem;padding:4px 8px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#c0d4f2;}
+.panel-cite{font-size:.75rem;color:var(--teal);margin-top:8px;
+  border-left:2px solid rgba(78,201,219,.3);padding-left:8px;line-height:1.55;}
+.seq-steps{display:flex;flex-direction:column;gap:5px;}
+.sstep{padding:8px 11px;border-radius:11px;border:1px solid var(--border);
+  background:rgba(255,255,255,.02);font-size:.77rem;color:var(--muted);
+  transition:all 200ms var(--ease);}
+.sstep.on{border-color:rgba(78,201,219,.35);background:rgba(78,201,219,.07);color:var(--text);}
+.sstep .sn{color:var(--teal);font-weight:700;margin-right:5px;}
+.leg-row{display:flex;align-items:center;gap:8px;font-size:.77rem;color:var(--muted);margin-bottom:5px;}
+.sw{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+/* footer */
+footer{border-top:1px solid var(--border);padding:40px clamp(16px,4vw,48px);background:var(--s1);}
+.footer-inner{max-width:1120px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-name{font-family:var(--font-head);font-weight:700;}
+.footer-note{font-size:.81rem;color:var(--muted);}
+/* responsive */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:36px;}
+  .diag-body{grid-template-columns:1fr;}
+  .diag-panel{border-left:none;border-top:1px solid var(--border);}
+  .methods-row{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .methods-row{grid-template-columns:1fr;}
+  .nav-links a{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">Kulsam Shanofer</a>
+    <div class="nav-links">
+      <a href="#abstract">Abstract</a>
+      <a href="#methods">Methods</a>
+      <a href="#findings">Findings</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#limitations">Limitations</a>
+    </div>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">To What Extent Do <em>Fairness Judgment</em> and Reward-Risk Predictive Error Learning Share Neural Substrates?</h1>
+      <p class="hero-byline">— A Narrative Synthesis</p>
+      <div class="hero-tag"><span class="hero-dot"></span>MSc Neuroscience &middot; Narrative Synthesis</div>
+      <p class="hero-sub">Examining whether the brain regions responsible for fairness judgements and reward prediction error signalling form a shared, domain-general architecture or operate as distinct neural modules.</p>
+      <div class="hero-meta">
+        <span class="meta-pill">🧠 fMRI &amp; Lesion Evidence</span>
+        <span class="meta-pill">📊 Computational Modelling</span>
+        <span class="meta-pill">🔬 AI &middot; VS &middot; vmPFC &middot; dACC</span>
+      </div>
+    </div>
+    <div class="hero-vis" aria-hidden="true">
+      <svg viewBox="0 0 320 320" fill="none" style="width:100%;max-height:360px;display:block;">
+        <circle cx="160" cy="44" r="36" fill="#1a1d0a" stroke="#c4a006" stroke-width="2"/>
+        <text x="160" y="40" text-anchor="middle" fill="#c4a006" font-size="11" font-family="Space Grotesk,sans-serif" font-weight="700">Mentalising</text>
+        <text x="160" y="56" text-anchor="middle" fill="#c4a006" font-size="9.5">Network</text>
+        <circle cx="74" cy="152" r="36" fill="#1a0e2e" stroke="#b87dff" stroke-width="2"/>
+        <text x="74" y="148" text-anchor="middle" fill="#b87dff" font-size="10" font-family="Space Grotesk,sans-serif" font-weight="700">Anterior</text>
+        <text x="74" y="163" text-anchor="middle" fill="#b87dff" font-size="10">Insula</text>
+        <circle cx="246" cy="152" r="36" fill="#0a2218" stroke="#5de89e" stroke-width="2"/>
+        <text x="246" y="148" text-anchor="middle" fill="#5de89e" font-size="10" font-family="Space Grotesk,sans-serif" font-weight="700">Ventral</text>
+        <text x="246" y="163" text-anchor="middle" fill="#5de89e" font-size="10">Striatum</text>
+        <circle cx="100" cy="260" r="34" fill="#1e1608" stroke="#f5c345" stroke-width="2"/>
+        <text x="100" y="264" text-anchor="middle" fill="#f5c345" font-size="10.5" font-family="Space Grotesk,sans-serif" font-weight="700">vmPFC</text>
+        <circle cx="220" cy="260" r="34" fill="#1c0d1e" stroke="#ff7eb3" stroke-width="2"/>
+        <text x="220" y="264" text-anchor="middle" fill="#ff7eb3" font-size="10.5" font-family="Space Grotesk,sans-serif" font-weight="700">dACC</text>
+        <line x1="160" y1="80" x2="100" y2="116" stroke="#c4a006" stroke-width="1.5" opacity=".5"/>
+        <line x1="160" y1="80" x2="220" y2="116" stroke="#c4a006" stroke-width="1.5" opacity=".5"/>
+        <line x1="74" y1="188" x2="100" y2="226" stroke="#b87dff" stroke-width="1.5" opacity=".5"/>
+        <line x1="246" y1="188" x2="220" y2="226" stroke="#5de89e" stroke-width="1.5" opacity=".5"/>
+        <line x1="246" y1="188" x2="120" y2="238" stroke="#5de89e" stroke-width="1.3" stroke-dasharray="5 4" opacity=".35"/>
+        <circle cx="160" cy="44" r="4" fill="#c4a006" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="2.4s" repeatCount="indefinite"/></circle>
+        <circle cx="74" cy="152" r="4" fill="#b87dff" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="2s" begin=".4s" repeatCount="indefinite"/></circle>
+        <circle cx="246" cy="152" r="4" fill="#5de89e" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="2.2s" begin=".8s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ABSTRACT -->
+<section class="section" id="abstract" style="background:var(--s1);">
+  <div class="inner-narrow">
+    <div class="abstract-card">
+      <div class="abstract-label">Abstract</div>
+      <p class="abstract-text">
+        This narrative synthesis examines whether fairness processing in the human brain relies on a <strong>domain-general prediction error (PE) architecture</strong> or a specialised neural module. Drawing on neuroimaging, computational modelling, and lesion studies, the synthesis evaluates the roles of the <strong>anterior insula (AI)</strong>, <strong>ventral striatum (VS)</strong>, <strong>ventromedial prefrontal cortex (vmPFC)</strong>, and <strong>dorsal anterior cingulate cortex (dACC)</strong> across fairness and non-social reward learning paradigms. Converging evidence positions the VS as the central locus of signed RPE computation that generalises across social and non-social domains, while AI encodes unsigned salience of expectation violations. The vmPFC transforms PE signals into socially-modulated value representations, and dACC monitors conflict downstream of PE computation. Collectively, these findings support a <strong>partial-overlap model</strong> in which fairness emerges from the interaction of expectation formation, violation detection, PE computation, and value integration within domain-general reinforcement learning circuitry — rather than a dedicated fairness module.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- METHODS -->
+<section class="section" id="methods">
+  <div class="inner">
+    <div class="sec-label">Methodology</div>
+    <h2 class="sec-title">Narrative Synthesis Approach</h2>
+    <p class="sec-sub">A systematic narrative synthesis integrating neuroimaging, computational modelling, lesion, and electrophysiological evidence across fairness and reward PE paradigms.</p>
+    <div class="methods-row">
+      <div class="mcard">
+        <div class="micon" style="background:rgba(78,201,219,.1);">🔍</div>
+        <h4>Search Strategy</h4>
+        <p>Two parallel searches targeting fairness-related neuroimaging and reward/risk PE learning literature, screened against inclusion criteria for human fMRI, TMS, and lesion studies reporting region-specific activation.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(93,232,158,.1);">📐</div>
+        <h4>Synthesis Framework</h4>
+        <p>Narrative synthesis with a partial-overlap model as the organising framework. Regions evaluated across four functional roles: expectation formation, violation detection, PE computation, and value integration.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(245,195,69,.1);">⚠️</div>
+        <h4>Caveats Addressed</h4>
+        <p>Reverse inference risk (Ruff &amp; Fehr, 2014), activation ≠ causation, fMRI inability to dissociate value from norm processing, limited lateralisation evidence, and compensatory reorganisation in lesion findings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINDINGS -->
+<section class="section" id="findings" style="background:var(--s1);">
+  <div class="inner">
+    <div class="sec-label">Key Findings</div>
+    <h2 class="sec-title">What the Synthesis Shows</h2>
+    <p class="sec-sub">Five principal conclusions emerging from the narrative synthesis, grounded in neuroimaging, computational modelling, and causal evidence.</p>
+    <div class="findings-grid">
+      <div class="finding-card">
+        <div class="finding-num">01</div>
+        <div class="finding-title">AI Is Not a Fairness-Specific Processor</div>
+        <p class="finding-text">The anterior insula encodes unsigned prediction error magnitude — salience — regardless of valence. Its U-shaped response to norm violations (Xiang et al., 2013) and broad co-activation across task domains (Yarkoni et al., 2011) rule out a fairness-specific function. Activating AI alone carries high reverse inference risk.</p>
+        <div class="finding-refs">
+          <span class="fref">Xiang et al., 2013</span>
+          <span class="fref">Menon &amp; Uddin, 2010</span>
+          <span class="fref">Ruff &amp; Fehr, 2014</span>
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">02</div>
+        <div class="finding-title">VS Is the Strongest Point of Overlap</div>
+        <p class="finding-text">The ventral striatum encodes signed dopaminergic RPE that generalises across social and non-social domains. Its valence-specific gradient — positive norm PE ventromedially, negative norm PE dorsolaterally — mirrors the canonical PE architecture of non-social reward learning.</p>
+        <div class="finding-refs">
+          <span class="fref">Xiang et al., 2013</span>
+          <span class="fref">Sescousse et al., 2013</span>
+          <span class="fref">Xu et al., 2025</span>
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">03</div>
+        <div class="finding-title">vmPFC Integrates Value with Social Context</div>
+        <p class="finding-text">vmPFC transforms VS PE signals into socially-weighted subjective fairness value, sensitive to ingroup/partner-type context. Causal evidence from vmPFC lesions confirms impairment of other-directed but not self-directed reward learning — a functional specialisation within the shared PE network.</p>
+        <div class="finding-refs">
+          <span class="fref">Gueguen et al., 2025</span>
+          <span class="fref">Apps et al., 2018</span>
+          <span class="fref">Christopoulos &amp; King-Casas, 2015</span>
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">04</div>
+        <div class="finding-title">dACC Monitors Conflict, Not RPE</div>
+        <p class="finding-text">dACC shows no consistent direct RPE encoding. Instead it tracks value differences between competing offers and scales with violation severity. It operates downstream of VS PE processing, coupling with the dorsolateral striatum during negative norm PE to guide behavioural adjustment.</p>
+        <div class="finding-refs">
+          <span class="fref">Santo-Angles et al., 2021</span>
+          <span class="fref">Xu et al., 2025</span>
+          <span class="fref">Xiang et al., 2013</span>
+        </div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">05</div>
+        <div class="finding-title">Fairness Is a Domain-General RL Computation</div>
+        <p class="finding-text">The synthesis supports a partial-overlap model: fairness processing recruits domain-general PE mechanisms rather than a dedicated module. Norm expectations are formed by the mentalising network, violations detected by AI, PEs computed in VS, values integrated in vmPFC, and conflict resolved by dACC — a coordinated, general-purpose architecture.</p>
+        <div class="finding-refs">
+          <span class="fref">Schultz, 2016</span>
+          <span class="fref">Botvinick et al., 2009</span>
+          <span class="fref">Jin et al., 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="section" id="architecture">
+  <div class="inner">
+    <div class="sec-label">Neural Architecture</div>
+    <h2 class="sec-title">The Domain-General Fairness Network</h2>
+    <p class="sec-sub">Click any brain region to explore its computational role, supporting evidence, and caveats. Use the view modes to filter by function.</p>
+    <div style="margin-top:32px;" class="diag-wrap">
+      <div class="diag-header">
+        <div class="diag-title">Domain-general PE architecture &middot; Fairness processing cascade</div>
+        <div class="diag-btns">
+          <button class="db on" data-m="all">All Regions</button>
+          <button class="db" data-m="pe">PE Pathway</button>
+          <button class="db" data-m="fair">Fairness Only</button>
+          <button class="db" id="animB">&#9654; Trace</button>
+          <button class="db" id="rstB">Reset</button>
+        </div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-flow">
+          <div class="flowchart">
+            <div class="f-row">
+              <div class="rnode n-stim" onclick="selectNode('stim')" data-rid="stim" style="width:300px;text-align:center;">
+                <div class="rn-tag" style="color:#6aabf0;">Input</div>
+                <div class="rn-name">Social Offer (Ultimatum Game)</div>
+                <div class="rn-ref">Sanfey et al., 2003</div>
+              </div>
+            </div>
+            <div class="arr-d"></div>
+            <div class="f-row">
+              <div class="rnode n-men" onclick="selectNode('men')" data-rid="men" style="width:420px;text-align:center;">
+                <div class="rn-tag" style="color:#c4a006;">Expectation Formation</div>
+                <div class="rn-name">Mentalising Network &middot; TPJ &middot; dmPFC &middot; STS</div>
+                <div class="rn-sub">Intentional attribution &middot; socially-informed norm expectations</div>
+                <div class="rn-ref">Saxe et al., 2004 &middot; Yoshida et al., 2008</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0;">
+              <div class="arr-d" style="height:22px;"></div>
+              <div class="dec">Expectation violated?</div>
+              <div class="arr-d" style="height:22px;"></div>
+            </div>
+            <div class="split">
+              <div class="rnode n-ai" onclick="selectNode('ai')" data-rid="ai">
+                <div class="rn-tag" style="color:#b87dff;">Salience Detection</div>
+                <div class="rn-name">Anterior Insula (AI)</div>
+                <div class="rn-sub">Unsigned PE &middot; U-shaped response &middot; deviation magnitude (valence-independent) &middot; Salience Network</div>
+                <div class="rn-ref">Menon &amp; Uddin, 2010</div>
+              </div>
+              <div class="split-mid">
+                <div class="sa r"></div>
+                <div class="sv"></div>
+                <div class="sa l"></div>
+              </div>
+              <div class="rnode n-vs" onclick="selectNode('vs')" data-rid="vs">
+                <div class="rn-tag" style="color:#5de89e;">PE Computation</div>
+                <div class="rn-name">Ventral Striatum (VS)</div>
+                <div class="rn-sub">Signed dopaminergic RPE &middot; (+) ventromedial &middot; (&minus;) dorsolateral &middot; factual &amp; fictive PE</div>
+                <div class="rn-ref">Xiang et al., 2013</div>
+              </div>
+            </div>
+            <div class="merge"><div class="ml"></div><div class="mdot"></div><div class="mr"></div></div>
+            <div class="split">
+              <div class="rnode n-vmpfc" onclick="selectNode('vmpfc')" data-rid="vmpfc">
+                <div class="rn-tag" style="color:#f5c345;">Value Integration</div>
+                <div class="rn-name">vmPFC</div>
+                <div class="rn-sub">Subjective fairness value &middot; social context modulation &middot; other-directed PE transformation</div>
+                <div class="rn-ref">Apps et al., 2018 &middot; Gueguen et al., 2025</div>
+              </div>
+              <div class="split-mid">
+                <div class="sa r"></div>
+                <div class="sv"></div>
+                <div class="sa l"></div>
+              </div>
+              <div class="rnode n-dacc" onclick="selectNode('dacc')" data-rid="dacc">
+                <div class="rn-tag" style="color:#ff7eb3;">Conflict Monitoring</div>
+                <div class="rn-name">dACC</div>
+                <div class="rn-sub">Conflict monitoring &middot; outcome evaluation &middot; scales with violation severity &middot; no direct RPE</div>
+                <div class="rn-ref">Xiang et al., 2013 &middot; Xu et al., 2025</div>
+              </div>
+            </div>
+            <div class="merge"><div class="ml"></div><div class="mdot"></div><div class="mr"></div></div>
+            <div class="f-row">
+              <div class="rnode n-out" onclick="selectNode('out')" data-rid="out" style="width:340px;text-align:center;">
+                <div class="rn-tag" style="color:#6aabf0;">Behavioural Output</div>
+                <div class="rn-name">Accept &middot; Reject &middot; Punish</div>
+                <div class="rn-sub">Norm enforcement decision &middot; domain-general RL output</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="diag-panel">
+          <div class="card-s">
+            <div class="panel-title" id="pt">Select a Region</div>
+            <p class="panel-text" id="px">Click any brain region to see its computational role, key evidence, and caveats from the synthesis.</p>
+            <div class="panel-chips" id="pc"></div>
+            <div class="panel-cite" id="pci" style="display:none;"></div>
+          </div>
+          <div class="card-s">
+            <h4>Processing Sequence</h4>
+            <div class="seq-steps" id="seqs">
+              <div class="sstep"><span class="sn">1</span>Social offer received</div>
+              <div class="sstep"><span class="sn">2</span>TPJ/dmPFC/STS form norm expectation</div>
+              <div class="sstep"><span class="sn">3</span>AI encodes salience of violation</div>
+              <div class="sstep"><span class="sn">4</span>VS computes signed RPE</div>
+              <div class="sstep"><span class="sn">5</span>vmPFC integrates social value</div>
+              <div class="sstep"><span class="sn">6</span>dACC monitors conflict</div>
+              <div class="sstep"><span class="sn">7</span>Accept / Reject / Punish</div>
+            </div>
+          </div>
+          <div class="card-s">
+            <h4>Colour Guide</h4>
+            <div class="leg-row"><span class="sw" style="background:#c4a006;"></span>Mentalising / expectation</div>
+            <div class="leg-row"><span class="sw" style="background:#b87dff;"></span>AI &middot; unsigned salience</div>
+            <div class="leg-row"><span class="sw" style="background:#5de89e;"></span>VS &middot; signed RPE</div>
+            <div class="leg-row"><span class="sw" style="background:#f5c345;"></span>vmPFC &middot; value</div>
+            <div class="leg-row"><span class="sw" style="background:#ff7eb3;"></span>dACC &middot; conflict</div>
+            <div class="leg-row"><span class="sw" style="background:#6aabf0;"></span>Input / output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section class="section" id="limitations" style="background:var(--s1);">
+  <div class="inner">
+    <div class="sec-label">Limitations &amp; Caveats</div>
+    <h2 class="sec-title">Interpreting the Evidence</h2>
+    <p class="sec-sub">Several methodological constraints limit the conclusions that can be drawn from fMRI and correlational evidence in this synthesis.</p>
+    <div class="methods-row">
+      <div class="mcard">
+        <div class="micon" style="background:rgba(255,126,179,.1);">🔁</div>
+        <h4>Reverse Inference Risk</h4>
+        <p>Activating the anterior insula during norm violation cannot be taken as evidence of fairness-specific processing. The AI is among the most broadly co-activated regions across task domains (Yarkoni et al., 2011), making reverse inference particularly hazardous without converging evidence.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(245,195,69,.1);">📉</div>
+        <h4>Activation &#8800; Causation</h4>
+        <p>Neuroimaging cannot distinguish reward responses from expectation updating or anticipatory processes (Pool et al., 2022). VS activation during norm enforcement may reflect PE, anticipation, or affective responses — fMRI alone cannot resolve this dissociation.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(93,232,158,.1);">🧩</div>
+        <h4>Dissociation Limits of fMRI</h4>
+        <p>vmPFC value representations and VS PE signals are model-derived dissociations. fMRI cannot confirm causal directionality between PE encoding and value integration without TMS or lesion evidence.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(184,125,255,.1);">🧠</div>
+        <h4>Lesion Interpretation</h4>
+        <p>Lesion findings (e.g., Gueguen et al., 2025) must be interpreted cautiously given variability in lesion characteristics, lesion overlap across participants, and compensatory neural reorganisation that may mask or exaggerate effects.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(106,171,240,.1);">🔬</div>
+        <h4>Lateralisation Evidence</h4>
+        <p>Lateralisation of ventral striatal PE signals in the fairness context remains limited. Most studies do not report hemisphere-specific analyses, reducing confidence in claims about left vs. right striatal encoding of positive and negative norm PE.</p>
+      </div>
+      <div class="mcard">
+        <div class="micon" style="background:rgba(78,201,219,.1);">👥</div>
+        <h4>Ecological Validity</h4>
+        <p>The widespread use of anonymous, unfamiliar partners in UG paradigms may underestimate vmPFC involvement in naturalistic fairness processing, where social relationship and reputation are salient (Apps et al., 2018; Brüne et al., 2013).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name">Kulsam Shanofer</div>
+      <div class="footer-note" style="margin-top:4px;">MSc Neuroscience &middot; Narrative Synthesis</div>
+    </div>
+    <div class="footer-note" style="text-align:right;">
+      To What Extent Do Fairness Judgment and Reward-Risk<br>
+      Predictive Error Learning Share Neural Substrates?<br>
+      <span style="font-style:italic;opacity:.7;">— A Narrative Synthesis</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Theme toggle
+(function(){
+  var btn = document.querySelector('[data-theme-toggle]');
+  var root = document.documentElement;
+  var dark = true;
+  btn.addEventListener('click', function(){
+    dark = !dark;
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.innerHTML = dark
+      ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  });
+})();
+
+// Node data — double-quoted strings to avoid apostrophe issues
+var rdata = {
+  stim: {
+    title: "Social Offer (Ultimatum Game)",
+    text: "The Ultimatum Game is the canonical fairness paradigm. A proposer divides a sum; the responder accepts or rejects. Sanfey et al. (2003) provided the first fMRI evidence of neural responses distinguishing fair from unfair offers, establishing this paradigm as the foundation for fairness neuroscience research.",
+    chips: ["canonical paradigm","Ultimatum Game","Sanfey et al., 2003"],
+    cite: "Sanfey et al. (2003) — first fMRI demonstration of AI and PFC responses to unfair offers.",
+    step: 0
+  },
+  men: {
+    title: "Mentalising Network · TPJ · dmPFC · STS",
+    text: "The mentalising network forms socially-informed expectations that define what constitutes a norm violation. By encoding the proposer's intentions and likely behaviour, it sets the expectation against which any offer is evaluated — upstream of all PE computation. Without this expectation signal, there is no violation for AI or VS to register.",
+    chips: ["expectation formation","intentional attribution","Saxe et al., 2004","upstream of PE"],
+    cite: "Saxe et al. (2004): TPJ encodes beliefs about others' intentions. Yoshida et al. (2008): predicts actions in strategic contexts.",
+    step: 1
+  },
+  ai: {
+    title: "Anterior Insula (AI) · Salience Encoding",
+    text: "AI is not a fairness-specific processor. It encodes unsigned deviation from expectation — confirmed by U-shaped responses to both advantageous and disadvantageous offers (Xiang et al., 2013). Its broad co-activation across task domains (Yarkoni et al., 2011) means AI activation alone cannot confirm fairness-specific function. This is the core reverse inference risk in the literature.",
+    chips: ["unsigned PE","U-shaped response","salience network","reverse inference risk","NOT signed RPE"],
+    cite: "Xiang et al. (2013): AI shows U-shaped norm-PE. Jin et al. (2025): norm PE localised to SMA/mSFG; AI = salience detection only.",
+    step: 2
+  },
+  vs: {
+    title: "Ventral Striatum (VS) · Signed RPE",
+    text: "VS is the central locus of PE computation in fairness processing. It encodes signed dopaminergic RPE — positive norm PE ventromedially, negative norm PE dorsolaterally. This generalises across social and non-social domains. VS also tracks fictive PE and activates during norm enforcement. Xu et al. (2025) showed VS encodes both reward and emotional PE — a truly shared domain-general signal.",
+    chips: ["signed RPE","(+) ventromedial","(-) dorsolateral","factual and fictive PE","strongest overlap"],
+    cite: "Xiang et al. (2013): valence-specific striatal norm PE. Xu et al. (2025): shared reward and emotional PE signal in VS.",
+    step: 3
+  },
+  vmpfc: {
+    title: "vmPFC · Subjective Fairness Value",
+    text: "vmPFC transforms VS PE signals into socially-weighted subjective fairness value. It is sensitive to ingroup/partner-type context (Apps et al., 2018). Other-directed PEs are encoded near the vmPFC-frontopolar boundary (Christopoulos & King-Casas, 2015). Causal evidence: vmPFC lesions specifically impair other-directed but not self-directed reward learning (Gueguen et al., 2025).",
+    chips: ["value integration","social context","other-directed PE","causal evidence (lesion)"],
+    cite: "Gueguen et al. (2025): vmPFC lesions impair other-directed learning. Apps et al. (2018): stronger vmPFC for ingroup fairness.",
+    step: 4
+  },
+  dacc: {
+    title: "dACC · Conflict Monitoring",
+    text: "dACC does NOT directly encode RPE. Instead it tracks the value difference between competing offers (Santo-Angles et al., 2021) — a conflict signal — and scales with violation severity. It functionally couples with dorsolateral VS during negative norm PE, operating downstream of PE computation to guide behavioural adjustment.",
+    chips: ["conflict monitoring","NO direct RPE","value difference signal","downstream of PE","norm enforcement"],
+    cite: "Santo-Angles et al. (2021): dACC tracks offer value differences. Xu et al. (2025): dACC linked to punishment decisions.",
+    step: 5
+  },
+  out: {
+    title: "Behavioural Output · Accept / Reject / Punish",
+    text: "Accept, reject, or punish — the norm-enforcement decision is the culmination of the domain-general RL pipeline. Pool et al. (2022) caution that neuroimaging cannot dissociate reward responses, expectation updating, and anticipatory processes at this final output stage.",
+    chips: ["norm enforcement","domain-general RL","Pool et al., 2022"],
+    cite: "Pool et al. (2022): neuroimaging cannot dissociate reward from expectation updating at the output stage.",
+    step: 6
+  }
+};
+
+var modeIds = {
+  all:  ['stim','men','ai','vs','vmpfc','dacc','out'],
+  pe:   ['stim','vs','ai','vmpfc','out'],
+  fair: ['stim','men','ai','vmpfc','dacc','out']
+};
+
+var nodes = Array.prototype.slice.call(document.querySelectorAll('.rnode'));
+var seqSteps = Array.prototype.slice.call(document.querySelectorAll('#seqs .sstep'));
+var cur = null, timer = null, mode = 'all';
+
+function setPanel(id) {
+  var d = rdata[id];
+  if (!d) return;
+  document.getElementById('pt').textContent = d.title;
+  document.getElementById('px').textContent = d.text;
+  document.getElementById('pc').innerHTML = d.chips.map(function(c){ return '<span class="chip">' + c + '</span>'; }).join('');
+  var ci = document.getElementById('pci');
+  ci.textContent = d.cite;
+  ci.style.display = d.cite ? '' : 'none';
+  seqSteps.forEach(function(s, i){ s.classList.toggle('on', i === d.step); });
+}
+
+function applyMode(m) {
+  mode = m;
+  document.querySelectorAll('.db[data-m]').forEach(function(b){
+    b.classList.toggle('on', b.dataset.m === m);
+  });
+  var show = modeIds[m] || modeIds.all;
+  nodes.forEach(function(n){
+    n.classList.toggle('dim', show.indexOf(n.dataset.rid) === -1);
+    n.classList.remove('sel');
+  });
+  cur = null;
+  document.getElementById('pt').textContent = 'Select a Region';
+  document.getElementById('px').textContent = 'Click any brain region to explore its computational role, evidence, and caveats.';
+  document.getElementById('pc').innerHTML = '';
+  document.getElementById('pci').style.display = 'none';
+  seqSteps.forEach(function(s){ s.classList.remove('on'); });
+}
+
+window.selectNode = function(rid) {
+  clearInterval(timer);
+  if (cur === rid) { applyMode(mode); return; }
+  cur = rid;
+  nodes.forEach(function(n){
+    n.classList.toggle('dim', n.dataset.rid !== rid);
+    n.classList.remove('sel');
+  });
+  var target = nodes.filter(function(n){ return n.dataset.rid === rid; })[0];
+  if (target) { target.classList.add('sel'); target.classList.remove('dim'); }
+  setPanel(rid);
+};
+
+document.querySelectorAll('.db[data-m]').forEach(function(b){
+  b.addEventListener('click', function(){ clearInterval(timer); applyMode(b.dataset.m); });
+});
+
+document.getElementById('rstB').addEventListener('click', function(){
+  clearInterval(timer); applyMode('all');
+});
+
+document.getElementById('animB').addEventListener('click', function(){
+  clearInterval(timer); applyMode('all');
+  var seq = ['stim','men','ai','vs','vmpfc','dacc','out'];
+  var i = 0;
+  function tick() {
+    nodes.forEach(function(x){
+      x.classList.toggle('dim', x.dataset.rid !== seq[i]);
+      x.classList.remove('sel');
+    });
+    var n = nodes.filter(function(x){ return x.dataset.rid === seq[i]; })[0];
+    if (n) { n.classList.add('sel'); n.classList.remove('dim'); }
+    setPanel(seq[i]);
+    i = (i + 1) % seq.length;
+  }
+  tick();
+  timer = setInterval(tick, 2100);
+});
+
+applyMode('all');
+</script>
+</body>
+</html>
